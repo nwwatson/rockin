@@ -23,7 +23,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       end
       run "#{sudo} apt-get -y install mysql-client libmysqlclient-dev"
     end
-    after "deploy:install", "mysql:install" if database.eql("mysql")
+    after "deploy:install", "mysql:install" if database.eql?("mysql")
 
 
     desc "Create a database and user for this application."
@@ -33,7 +33,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       run "mysql -u root -p'#{mysql_root_password}' < /tmp/mysql_create"
       run "rm /tmp/mysql_create"
     end
-    after "deploy:setup", "mysql:create_database" if database.eql("mysql")
+    after "deploy:setup", "mysql:create_database" if database.eql?("mysql")
 
 
     desc "Generate the database.yml configuration file."
@@ -41,13 +41,13 @@ Capistrano::Configuration.instance(:must_exist).load do
       run "mkdir -p #{shared_path}/config"
       put template("mysql.yml.erb"), "#{shared_path}/config/database.yml"
     end
-    after "deploy:setup", "mysql:setup" if database.eql("mysql")
+    after "deploy:setup", "mysql:setup" if database.eql?("mysql")
 
 
     desc "Symlink the database.yml file into latest release"
     task :symlink, roles: :app do
       run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     end
-    after "deploy:finalize_update", "mysql:symlink" if database.eql("mysql")
+    after "deploy:finalize_update", "mysql:symlink" if database.eql?("mysql")
   end
 end
