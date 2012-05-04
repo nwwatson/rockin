@@ -12,6 +12,9 @@ set :deploy_via, :remote_cache
 set :use_sudo, false
 set :port, 22
 
+# Firewall SSH Port (You'll need to change the port above if you set a different port during deploy:install)
+set :ssh_port, 22
+
 
 # Datbase Settings
 #set :database, "mysql"
