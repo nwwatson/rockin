@@ -33,7 +33,7 @@ In your project, run the following:
 Then run this generator with an optional IP address to copy over a deploy.rb that is more suited to this gem.
 The application name defaults to the same name as your rails app and the repository is pulled from your .git/config.
 
-    rails g cap_bootstrap:install 99.99.99.99
+    rails g rockin:install 99.99.99.99
 
 Double check the settings in config/deploy.rb and then run:
 
