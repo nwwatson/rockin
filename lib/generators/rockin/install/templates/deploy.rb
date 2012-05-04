@@ -10,9 +10,12 @@ set :application, "<%= application %>"
 set :deploy_to, "/home/#{user}/apps/#{application}"
 set :deploy_via, :remote_cache
 set :use_sudo, false
+set :port, 22
+
 
 # Datbase Settings
-set :database, "mysql"
+#set :database, "mysql"
+set :database, "postgresql"
 
 # Git Repository Settings
 set :scm, "git"
