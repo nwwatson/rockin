@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/cap_bootstrap/version', __FILE__)
+require File.expand_path('../lib/rockin/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Nicholas Watson"]
