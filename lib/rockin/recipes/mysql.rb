@@ -37,7 +37,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     desc "Generate the database.yml configuration file."
     task :setup, roles: :app do
       run "mkdir -p #{shared_path}/config"
-      put template("mysql.yml.erb"), "#{shared_path}/config/database.yml"
+      put template "mysql.yml.erb", "#{shared_path}/config/database.yml"
     end
     after "deploy:setup", "mysql:setup" 
 
