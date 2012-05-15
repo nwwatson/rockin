@@ -1,12 +1,11 @@
 require "bundler/capistrano"
-require "rockin/capistrano"
 
 server "<%= ip %>", :web, :app, :db, primary: true
 
 # Deployment Settings
+set :application, "<%= application %>"
 set :domain, "#{application}.com"
 set :user, "deployer"
-set :application, "<%= application %>"
 set :deploy_to, "/home/#{user}/apps/#{application}"
 set :deploy_via, :remote_cache
 set :use_sudo, false
@@ -28,5 +27,15 @@ set :branch, "master"
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
+
+require 'rockin/recipes/base'
+require 'rockin/recipes/check'
+require 'rockin/recipes/nginx'
+require 'rockin/recipes/nodejs'
+require "rockin/recipes/#{database}"
+require 'rockin/recipes/rbenv'
+require 'rockin/recipes/unicorn'
+require 'rockin/recipes/utilities'
+require 'rockin/recipes/security'
 
 after "deploy", "deploy:cleanup" # keep only the last 5 releases

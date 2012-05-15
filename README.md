@@ -16,6 +16,7 @@ Capistrano tasks for deploying Rails applications using Ubuntu 10.04, rbenv, ngi
 Add these lines to your application's Gemfile:
 
     gem 'capistrano'
+    gem 'unicorn'
     gem 'rockin', :git => 'git@github.com:entropillc/rockin.git'
 
 And then execute:
@@ -34,6 +35,8 @@ Then run this generator with an optional IP address to copy over a deploy.rb tha
 The application name defaults to the same name as your rails app and the repository is pulled from your .git/config.
 
     rails g rockin:install 99.99.99.99
+    
+Once the command is run, it might ask you for permission to overwrite deploy.rb. Say yes.
 
 Double check the settings in config/deploy.rb and then run:
 
