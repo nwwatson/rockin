@@ -38,10 +38,28 @@ The application name defaults to the same name as your rails app and the reposit
     
 Once the command is run, it might ask you for permission to overwrite deploy.rb. Say yes.
 
-Double check the settings in config/deploy.rb and then run:
+Before you run any Commands, its is recommended that you do not use the root account for your VPS with the scripts. You must create yourself a user within the administrative group. To do this, run the following command:
+
+    adduser <username> --ingroup admin
+    
+Replace <username> with the username of your choice.
+  
+This script is able to setup both mysql and postgres databases. To change the database which you want installed, edit the following line in the config/deploy.rb file:
+
+    set :database, "mysql" # or "postgresql"
+    
+Double check the settings in the deploy.rb file. Play close attention to the values for server, domain, application and repository to ensure the are correct.
+
+You can start package installation on Ubuntu by running the following command. This will install all the necessary packages run you application
 
     cap deploy:install
+    
+To set up the deployment directories for your application and setup a blank database, run the following command.
+
     cap deploy:setup
+    
+When you are ready to deploy your code, run the following command:
+
     cap deploy:cold
 
 ## Advanced Options
@@ -51,12 +69,6 @@ Shown below are the default advanced settings, but they can overridden.
 ### Setup
 
     set(:domain) { "#{application}.com" }
-
-### PostgreSQL
-
-    set :postgresql_host, "localhost"
-    set(:postgresql_user) { application }
-    set(:postgresql_database) { "#{application}_production" }
 
 ### Ruby
 
