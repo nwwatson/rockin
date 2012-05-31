@@ -1,10 +1,6 @@
 # Rockin
 
-Capistrano tasks for deploying Rails applications using Ubuntu 10.04, rbenv, nginx, Unicorn and PostgreSQL. Based on the excellent Railscasts by Ryan Bates, with permission of course. If you are new to Capistrano or setting up a VPS, I highly recommend subscribing to his pro screencasts and watching the following:
-
-* [Deploying to a VPS](http://railscasts.com/episodes/335-deploying-to-a-vps) (Pro)
-* [Capistrano Tasks](http://railscasts.com/episodes/133-capistrano-tasks-revised) (Free)
-* [Capistrano Recipes](http://railscasts.com/episodes/337-capistrano-recipes) (Pro)
+Capistrano tasks for deploying Rails applications using Ubuntu 10.04, rbenv, nginx, Unicorn and PostgreSQL or MySQL. Much of the code has been taken from Ryan Bates's [Capistrano Recipes](http://railscasts.com/episodes/337-capistrano-recipes) Screencast. It is highly recommended that you view the screencast for further information on Capistrano deployment recipes.
 
 ## Requirements
 
@@ -21,11 +17,9 @@ Add these lines to your application's Gemfile:
 
 And then execute:
 
-    $ bundle
+    bundle install
 
 ## Usage
-
-Setup a new Ubuntu 10.04 slice. Add a user called deployer with sudo privileges.
 
 In your project, run the following:
 
@@ -38,7 +32,7 @@ The application name defaults to the same name as your rails app and the reposit
     
 Once the command is run, it might ask you for permission to overwrite deploy.rb. Say yes.
 
-Before you run any Commands, its is recommended that you do not use the root account for your VPS with the scripts. You must create yourself a user within the administrative group. To do this, run the following command:
+Before you run any Commands, its is recommended that you do not use the root account for your VPS with the scripts. You must create yourself a user within the administrative group. To do this, on the VPS, run the following command:
 
     adduser <username> --ingroup admin
     
