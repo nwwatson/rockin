@@ -83,11 +83,15 @@ Shown below are the default advanced settings, but they can overridden.
     set(:unicorn_log) { "#{shared_path}/log/unicorn.log" }
     set :unicorn_workers, 2
 
-## Contributing
+## Found a bug?
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Added some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+If you are having a problem with Bootstrapped, first look at the FAQs above. If you still cannot resolve it, please submit an issue here.
+
+http://github.com/entropillc/rockin/issues
+
+## Contribute
+
+Contributing is simple, [create an issue](http://github.com/entropillc/rockin/issues) to ensure that your change will be accepted. Then fork the repo, create a branch, make you change, and submit a pull request attaching your code to the issue.
+
+
 
