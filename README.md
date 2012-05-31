@@ -46,15 +46,15 @@ Double check the settings in the deploy.rb file. Play close attention to the val
 
 You can start package installation on Ubuntu by running the following command. This will install all the necessary packages run you application
 
-    cap deploy:install
+    bundle exec cap deploy:install
     
 To set up the deployment directories for your application and setup a blank database, run the following command.
 
-    cap deploy:setup
+    bundle exec cap deploy:setup
     
 When you are ready to deploy your code, run the following command:
 
-    cap deploy:cold
+    bundle exec cap deploy:cold
 
 ## Advanced Options
 
@@ -85,7 +85,7 @@ http://github.com/entropillc/rockin/issues
 
 ## Contribute
 
-Contributing is simple, [create an issue](http://github.com/entropillc/rockin/issues) to ensure that your change will be accepted. Then fork the repo, create a branch, make you change, and submit a pull request attaching your code to the issue.
+Contributing is simple, [create an issue](http://github.com/entropillc/rockin/issues) to ensure that your change will be accepted. Then fork the repo, create a branch, make your change, and submit a pull request attaching your code to the issue.
 
 
 
