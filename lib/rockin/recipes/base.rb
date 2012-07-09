@@ -19,6 +19,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       run "#{sudo} dpkg-reconfigure -f noninteractive tzdata"
       run "#{sudo} apt-get -y update"
       run "#{sudo} apt-get -y install python-software-properties"
+      run "#{sudo} apt-get -y install libxml2-dev"
     end
   end
 end
