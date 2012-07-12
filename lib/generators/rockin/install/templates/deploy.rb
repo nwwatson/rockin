@@ -11,9 +11,7 @@ set :deploy_to, "/home/#{user}/apps/#{application}"
 set :deploy_via, :remote_cache
 set :use_sudo, false
 set :port, 22
-set :default_environment, {
-  'PATH' => "/home/#{user}/.rbenv/shims:/home/#{user}/.rbenv/bin:$PATH"
-}
+
 set :bundle_flags, "--deployment --quiet --binstubs --shebang ruby-local-exec"
 
 # Firewall SSH Port (You'll need to change the port above if you set a different port during deploy:install)
