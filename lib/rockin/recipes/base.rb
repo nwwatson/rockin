@@ -17,7 +17,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       run "#{sudo} bash -c 'echo UTC > /etc/timezone'"
       run "#{sudo} cp /usr/share/zoneinfo/UTC /etc/localtime"
       run "#{sudo} dpkg-reconfigure -f noninteractive tzdata"
-      #run "#{sudo} apt-get -y update"
+      run "#{sudo} apt-get -y update"
       run "#{sudo} apt-get -y install python-software-properties"
       run "#{sudo} apt-get -y install libxml2-dev libxslt-dev libmagickwand-dev imagemagick"
     end
