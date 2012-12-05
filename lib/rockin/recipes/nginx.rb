@@ -1,4 +1,6 @@
 Capistrano::Configuration.instance(:must_exist).load do
+  set_default(:nginx_multiple_sites, true)
+  
   namespace :nginx do
     desc "Install latest stable release of nginx"
     task :install, roles: :web do

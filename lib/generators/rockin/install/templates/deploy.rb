@@ -18,6 +18,8 @@ set :bundle_flags, "--deployment --quiet --binstubs --shebang ruby-local-exec"
 # Firewall SSH Port (You'll need to change the port above if you set a different port during deploy:install)
 set :ssh_port, 22
 
+# NGINX Settings
+set :nginx_multiple_sites, true # Set false if this is the only site bound to an IP
 
 # Datbase Settings
 #set :database, "mysql"
