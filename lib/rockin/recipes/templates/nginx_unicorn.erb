@@ -10,7 +10,7 @@ upstream unicorn_<%= application %> {
 #}
 
 server {
-  listen 80 <%= "default deferred" unless multiple_sites %>; # Remove default and deferred for multiple apps on a single server
+  listen 80 <%= "default deferred" unless nginx_multiple_sites %>; # Remove default and deferred for multiple apps on a single server
   server_name <%= domain %>;
   root <%= current_path %>/public;
 
