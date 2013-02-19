@@ -60,6 +60,8 @@ require 'rockin/recipes/rbenv'
 <% unless options.jruby? -%>
 require 'rockin/recipes/nodejs'  
 require 'rockin/recipes/unicorn'
+<% else -%>
+require 'rockin/recipes/trinidad'
 <%  end -%>
 require 'rockin/recipes/utilities'
 require 'rockin/recipes/security'
