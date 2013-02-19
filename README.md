@@ -1,11 +1,11 @@
 # Rockin
 
-Capistrano tasks for deploying Rails applications using Ubuntu 10.04, rbenv, nginx, Unicorn and PostgreSQL or MySQL. Much of the code has been taken from Ryan Bates's [Capistrano Recipes](http://railscasts.com/episodes/337-capistrano-recipes) Screencast. It is highly recommended that you view the screencast for further information on Capistrano deployment recipes.
+Capistrano tasks for deploying Rails applications using Ubuntu LTS 10.04 or LTS 12.04, rbenv, nginx, Unicorn and PostgreSQL or MySQL. Much of the code has been taken from Ryan Bates's [Capistrano Recipes](http://railscasts.com/episodes/337-capistrano-recipes) Screencast. It is highly recommended that you view the screencast for further information on Capistrano deployment recipes.
 
 ## Requirements
 
 * Capistrano
-* Fresh Ubuntu 10.04 or 11.10 install
+* Fresh Ubuntu 10.04 or 12.04 install
 
 ## Installation
 
@@ -67,7 +67,7 @@ Shown below are the default advanced settings, but they can overridden.
 ### Ruby
 
     set :ruby_version, "1.9.3-p125"
-    set :rbenv_bootstrap, "bootstrap-ubuntu-10-04" # Or bootstrap-ubuntu-11-10
+    set :rbenv_bootstrap, "bootstrap-ubuntu-10-04" # Or bootstrap-ubuntu-12-04 for Precise
 
 ### Unicorn
 
