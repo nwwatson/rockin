@@ -1,8 +1,9 @@
 Capistrano::Configuration.instance(:must_exist).load do
   set_default(:trinidad_config_path) { "#{shared_path}/config/trinidad.yml" }
-  
+  set_default(:trinidad_port) { 3000 }
   set_default :trinidad_config do
     {
+      "port" => "#{trinidad_port}",
       "environment" => "production",
       "reload_strategy" => "rolling",
       "jruby_max_runtimes" => 1
