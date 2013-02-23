@@ -1,4 +1,5 @@
 require "bundler/capistrano"
+load 'deploy/assets'
 
 server "<%= ip %>", :web, :app, :db, primary: true
 
