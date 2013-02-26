@@ -1,6 +1,8 @@
+<% unless jruby %>
 upstream unicorn_<%= application %> {
   server unix:/tmp/unicorn.<%= application %>.sock fail_timeout=0;
 }
+<% end %>
 
 # Redirect example.com to www.example.com
 #server {
@@ -29,7 +31,11 @@ server {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
     proxy_redirect off;
-    proxy_pass http://unicorn_<%= application %>;
+		<% if jruby %>
+    proxy_pass http://localhost:<%= jruby_proxy_port %>;
+		<% else %>
+		proxy_pass http://unicorn_<%= application %>;
+		<% end %>
   }
 
   error_page 503 @maintenance;
