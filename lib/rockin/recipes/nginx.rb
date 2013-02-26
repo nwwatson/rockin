@@ -2,6 +2,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   set_default(:nginx_multiple_sites, true)
   set_default(:jruby, false)
   set_default(:trinidad_port) { 3000 }
+  set_default :jruby_proxy_port, 3000
   
   namespace :nginx do
     desc "Install nginx"
