@@ -4,7 +4,7 @@ Description:
     from the git config for remote origin.
 
 Example:
-    rails generate cap_bootstrap 255.255.255.255
+    rails generate rockin:install 255.255.255.255
 
     This will create:
         config/deploy.rb
