@@ -53,7 +53,9 @@ ssh_options[:forward_agent] = true
 <% end -%>
 
 require 'rockin/recipes/base'
+<% unless options.jruby? -%>
 require 'rockin/recipes/check'
+<% end -%>
 require 'rockin/recipes/nginx'
 require "rockin/recipes/#{database}"
 require 'rockin/recipes/rbenv'

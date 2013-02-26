@@ -7,14 +7,19 @@ Capistrano::Configuration.instance(:must_exist).load do
       "port" => "#{trinidad_port}",
       "environment" => "production",
       "reload_strategy" => "rolling",
-      "jruby_max_runtimes" => 1
+      "jruby_max_runtimes" => 1,
+      "web_apps" => {
+        "default" => {
+          "root_dir" => "#{current_path}"
+        }
+      }
     }
   end
   
   set_default :trinidad_init_config do
     {
       "run_user" => user,
-      "app_path" => current_path,
+      "app_path" => "/home/#{user}/apps/",
       "trinidad_options" => "--config #{trinidad_config_path}",
       "ruby_compat_version" => "RUBY1_9",
       "jsvc_path" => "/usr/bin/jsvc",
