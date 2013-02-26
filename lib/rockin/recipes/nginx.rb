@@ -1,13 +1,12 @@
 Capistrano::Configuration.instance(:must_exist).load do
   set_default(:nginx_multiple_sites, true)
-  set_default :jruby, :false
+  set_default(:jruby, false)
+  set_default(:trinidad_port) { 3000 }
   set_default :jruby_proxy_port, 3000
   
   namespace :nginx do
-    desc "Install latest stable release of nginx"
+    desc "Install nginx"
     task :install, roles: :web do
-      run "#{sudo} add-apt-repository -y ppa:nginx/stable"
-      run "#{sudo} apt-get -y update"
       run "#{sudo} apt-get -y install nginx"
     end
     after "deploy:install", "nginx:install"

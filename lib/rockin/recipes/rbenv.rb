@@ -1,6 +1,5 @@
 Capistrano::Configuration.instance(:must_exist).load do
   set_default :ruby_version, "1.9.3-p125"
-  set_default :rbenv_bootstrap, "bootstrap-ubuntu-10-04"
   set_default :jruby, :false
 
   namespace :rbenv do
