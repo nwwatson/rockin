@@ -38,8 +38,8 @@ Capistrano::Configuration.instance(:must_exist).load do
       put trinidad_init_config.to_yaml, "/tmp/trinidad_init.yml"
       run "gem install trinidad_init_services"
       run "trinidad_init_service /tmp/trinidad_init.yml"
-      run "#{sudo} mv /tmp/trinidad /etc/init.d/trinidad_#{application}"
-      run "#{sudo} update-rc.d -f trinidad_#{application} defaults"
+      run "#{sudo} mv /tmp/trinidad /etc/init.d/trinidad"
+      run "#{sudo} update-rc.d -f trinidad defaults"
       restart
     end
     after "deploy:setup", "trinidad:setup"
