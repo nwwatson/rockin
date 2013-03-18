@@ -6,7 +6,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     desc "Install rbenv, Ruby, and the Bundler gem"
     task :install, roles: :app do
       run "#{sudo} apt-get -y install curl git-core"
-      if jruby
+      if jruby.eql?(true)
         run "#{sudo} apt-get -y install openjdk-7-jdk jsvc"
       end
       run "curl -L https://raw.github.com/fesplugas/rbenv-installer/master/bin/rbenv-installer | bash"
