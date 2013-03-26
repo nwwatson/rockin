@@ -4,7 +4,7 @@ Capistrano::Configuration.instance(:must_exist).load do
 
   namespace :rbenv do
     desc "Install rbenv, Ruby, and the Bundler gem"
-    task :install, roles: :app do
+    task :install, roles: [:app, :sidekiq] do
       run "#{sudo} apt-get -y install curl git-core"
       if jruby.eql?(true)
         run "#{sudo} apt-get -y install openjdk-7-jdk jsvc"

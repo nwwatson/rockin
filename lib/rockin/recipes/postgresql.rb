@@ -23,7 +23,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     end
     
     desc "Generate the database.yml configuration file."
-    task :setup, roles: :app do
+    task :setup, roles: [:app, :sidekiq] do
       run "mkdir -p #{shared_path}/config"
       template "postgresql.yml.erb", "#{shared_path}/config/database.yml"
     end
@@ -32,7 +32,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     end
 
     desc "Symlink the database.yml file into latest release"
-    task :symlink, roles: :app do
+    task :symlink, roles: [:app, :sidekiq] do
       run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     end
     if database.eql?("postgresql")
