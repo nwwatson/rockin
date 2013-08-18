@@ -1,7 +1,3 @@
-upstream unicorn_<%= application %> {
-  server unix:/tmp/unicorn.<%= application %>.sock fail_timeout=0;
-}
-
 # Redirect example.com to www.example.com
 #server {
 #  listen 80;
@@ -25,15 +21,15 @@ server {
   if (-f $document_root/system/maintenance.html) {
     return 503;
   }
-	
-  try_files $uri/index.html $uri @unicorn_<%= application %>;
-  location @unicorn_<%= application %> {
+  
+  try_files $uri/index.html $uri @trinidad_<%= application %>;
+  location @trinidad_<%= application %> {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
     proxy_redirect off;
-		proxy_pass http://unicorn_<%= application %>;
+    proxy_pass http://localhost:<%= jruby_proxy_port %>;
   }
-	
+  
   error_page 503 @maintenance;
   location @maintenance {
     rewrite  ^(.*)$  /system/maintenance.html last;

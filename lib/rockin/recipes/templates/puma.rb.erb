@@ -1,0 +1,9 @@
+rails_env = ENV['RAILS_ENV'] || '<%= puma_environment %>'
+
+threads 4,4
+
+bind  "<%= puma_bind %>"
+pidfile "<%= puma_pid %>"
+state_path "<%= state_path %>"
+
+activate_control_app
