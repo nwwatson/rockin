@@ -8,6 +8,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     desc "Install the latest stable release of PostgreSQL."
     task :install, roles: :db, only: {primary: true} do
       run "#{sudo} apt-get -y install postgresql libpq-dev"
+      run "#{sudo} apt-get -y install postgresql-contrib"
     end
     if database.eql?("postgresql")
       after "deploy:install", "postgresql:install" 
@@ -17,6 +18,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     task :create_database, roles: :db, only: {primary: true} do
       run %Q{#{sudo} -u postgres psql -c "create user #{postgresql_user} with password '#{postgresql_password}';"}
       run %Q{#{sudo} -u postgres psql -c "create database #{postgresql_database} owner #{postgresql_user};"}
+      run %Q{#{sudo} -u postgres psql -d #{postgresql_database} -c "CREATE EXTENSION hstore;"}
     end
     if database.eql?("postgresql")
       after "deploy:setup", "postgresql:create_database" 
