@@ -1,5 +1,6 @@
 Capistrano::Configuration.instance(:must_exist).load do
   set_default :ruby_version, "1.9.3-p125"
+  set_default :jdk_version, "openjdk-7-jdk"
   set_default :jruby, :false
 
   namespace :rbenv do
@@ -7,7 +8,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     task :install, roles: :app do
       run "#{sudo} apt-get -y install curl git-core"
       if jruby.eql?(true)
-        run "#{sudo} apt-get -y install openjdk-7-jdk jsvc"
+        run "#{sudo} apt-get -y install #{jdk_version} jsvc"
       end
       run "curl -L https://raw.github.com/fesplugas/rbenv-installer/master/bin/rbenv-installer | bash"
       bashrc = <<-BASHRC

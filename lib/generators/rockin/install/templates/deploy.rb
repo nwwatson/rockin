@@ -8,8 +8,8 @@ set :application, "<%= application %>"
 set :domain, "#{application}.com"
 set :user, "deployer"
 set :deploy_to, "/home/#{user}/apps/#{application}"
-set :deploy_via, <%= options.jruby? ? ':copy' : ':remote_cache' %>
-<% if options.jruby? -%>
+set :deploy_via, <%= app_server.eql?("trinidad") ? ':copy' : ':remote_cache' %>
+<% if app_server.eql?("trinidad") -%>
 set :copy_exclude, %w[.git log tmp .DS_Store]
 <% end -%>
 set :use_sudo, false
@@ -20,7 +20,7 @@ set :default_environment, {
 set :bundle_flags, "--deployment --quiet --binstubs --shebang ruby-local-exec"
 
 # Git Settings
-<% if options.jruby -%>
+<% if app_server.eql?("trinidad") -%>
 set :repository, "."
 set :scm, :none
 <% else -%>
@@ -34,37 +34,39 @@ set :ssh_port, 22
 
 # NGINX Settings
 set :nginx_multiple_sites, true # Set false if this is the only site bound to an IP
+set :nginx_app_server, "<%= app_server %>"
 
 # Datbase Settings
 #set :database, "mysql"
 set :database, "postgresql"
 
+# Update Timezone. Turn off on AWS
+set :timezone, true
+
 # Ruby Settings
 <% if options.jruby? -%>
 set :jruby, true
-set :ruby_version, "jruby-1.7.1"
+set :ruby_version, "jruby-1.7.4"
 <% else %>
-set :ruby_version, "1.9.3-p327"  
+set :ruby_version, "2.0.0-p195"  
 <% end -%>
 
 default_run_options[:pty] = true
-<% unless options.jruby? -%>
+<% unless app_server.eql?("trinidad") -%>
 ssh_options[:forward_agent] = true
 <% end -%>
 
 require 'rockin/recipes/base'
-<% unless options.jruby? -%>
+<% unless app_server.eql?("trinidad")  -%>
 require 'rockin/recipes/check'
 <% end -%>
 require 'rockin/recipes/nginx'
 require "rockin/recipes/#{database}"
 require 'rockin/recipes/rbenv'
-<% unless options.jruby? -%>
+<% unless app_server.eql?("trinidad")  -%>
 require 'rockin/recipes/nodejs'  
-require 'rockin/recipes/unicorn'
-<% else -%>
-require 'rockin/recipes/trinidad'
 <%  end -%>
+require 'rockin/recipes/<%= app_server %>'
 require 'rockin/recipes/utilities'
 require 'rockin/recipes/security'
 
