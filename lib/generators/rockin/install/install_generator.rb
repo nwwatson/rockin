@@ -3,7 +3,8 @@ module Rockin
     class InstallGenerator < Rails::Generators::Base
       source_root File.expand_path('../templates', __FILE__)
       argument :ip, type: :string, default: '255.255.255.255'
-      class_option :jruby, type: :boolean, default: false, :description => "Installs environment for hosting JRuby applications with Trinidad"
+      argument :app_server, type: :string, default: "unicorn", :description => "unicorn, trinidad or puma"
+      class_option :jruby, type: :boolean, default: false, :description => "Installs JRuby instead of MRI"
   
       def generate_deploy_file
         template "deploy.rb", "config/deploy.rb"

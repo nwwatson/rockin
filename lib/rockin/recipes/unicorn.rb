@@ -1,6 +1,6 @@
 Capistrano::Configuration.instance(:must_exist).load do
   set_default(:unicorn_user) { user }
-  set_default(:unicorn_pid) { "#{current_path}/tmp/pids/unicorn.pid" }
+  set_default(:unicorn_pid) { "#{shared_path}/tmp/pids/unicorn.pid" }
   set_default(:unicorn_config) { "#{shared_path}/config/unicorn.rb" }
   set_default(:unicorn_log) { "#{shared_path}/log/unicorn.log" }
   set_default(:unicorn_gemfile) { "#{current_path}/Gemfile" }
@@ -21,7 +21,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     %w[start stop restart].each do |command|
       desc "#{command} unicorn"
       task command, roles: :app do
-        run "service unicorn_#{application} #{command}"
+        run "#{sudo} service unicorn_#{application} #{command}"
       end
       after "deploy:#{command}", "unicorn:#{command}"
     end
