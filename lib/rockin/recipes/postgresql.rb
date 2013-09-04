@@ -1,4 +1,6 @@
 Capistrano::Configuration.instance(:must_exist).load do
+  set_default(:postgres_install, true)
+  set_default(:postgres_create_database, true)
   set_default(:postgresql_host, "localhost")
   set_default(:postgresql_user) { application }
   set_default(:postgresql_password) { Capistrano::CLI.password_prompt "PostgreSQL Password: " }
@@ -7,8 +9,12 @@ Capistrano::Configuration.instance(:must_exist).load do
   namespace :postgresql do
     desc "Install the latest stable release of PostgreSQL."
     task :install, roles: :db, only: {primary: true} do
-      run "#{sudo} apt-get -y install postgresql libpq-dev"
-      run "#{sudo} apt-get -y install postgresql-contrib"
+      if postgres_install.eql?(true)
+        run "#{sudo} apt-get -y install postgresql libpq-dev"
+        run "#{sudo} apt-get -y install postgresql-contrib"
+      else 
+        run "#{sudo} apt-get -y install postgresql-client"
+      end
     end
     if database.eql?("postgresql")
       after "deploy:install", "postgresql:install" 
@@ -20,7 +26,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       run %Q{#{sudo} -u postgres psql -c "create database #{postgresql_database} owner #{postgresql_user};"}
       run %Q{#{sudo} -u postgres psql -d #{postgresql_database} -c "CREATE EXTENSION hstore;"}
     end
-    if database.eql?("postgresql")
+    if database.eql?("postgresql") && postgres_create_database.eql?(true)
       after "deploy:setup", "postgresql:create_database" 
     end
     
