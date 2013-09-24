@@ -8,7 +8,7 @@ Capistrano::Configuration.instance(:must_exist).load do
 
   namespace :puma do
     desc "Setup Puma initializer and app configuration"
-    task :setup, roles: :app do
+    task :setup, :roles => :app do
       # Copy the scripts to services directory 
       template "puma-manager.conf", "/tmp/puma-manager.conf"
       run "#{sudo} mv /tmp/puma-manager.conf /etc/init"

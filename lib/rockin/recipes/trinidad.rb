@@ -33,7 +33,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   
   namespace :trinidad do
     desc "Setup Trinidad configuration for this application"
-    task :setup, roles: :app do
+    task :setup, :roles => :app do
       put trinidad_config.to_yaml, trinidad_config_path
       put trinidad_init_config.to_yaml, "/tmp/trinidad_init.yml"
       run "gem install trinidad_init_services"
@@ -45,14 +45,14 @@ Capistrano::Configuration.instance(:must_exist).load do
     after "deploy:setup", "trinidad:setup"
   
     desc "Reload application in Trinidad"
-    task :reload, roles: :app do
+    task :reload, :roles => :app do
       run "touch #{current_release}/tmp/restart.txt"
     end
     after "deploy:restart", "trinidad:reload"
   
     %w[start stop restart].each do |command|
       desc "#{command} Trinidad"
-      task command, roles: :app do
+      task command, :roles => :app do
         run "#{sudo} service trinidad_#{application} #{command}"
       end
     end

@@ -8,7 +8,7 @@ Capistrano::Configuration.instance(:must_exist).load do
 
   namespace :postgresql do
     desc "Install the latest stable release of PostgreSQL."
-    task :install, roles: :db, only: {primary: true} do
+    task :install, :roles => :db, :only => { :primary => true } do
       if postgres_install.eql?(true)
         run "#{sudo} apt-get -y install postgresql libpq-dev"
         run "#{sudo} apt-get -y install postgresql-contrib"
@@ -21,7 +21,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     end
     
     desc "Create a database for this application."
-    task :create_database, roles: :db, only: {primary: true} do
+    task :create_database, :roles => :db, :only => { :primary => true } do
       run %Q{#{sudo} -u postgres psql -c "create user #{postgresql_user} with password '#{postgresql_password}';"}
       run %Q{#{sudo} -u postgres psql -c "create database #{postgresql_database} owner #{postgresql_user};"}
       run %Q{#{sudo} -u postgres psql -d #{postgresql_database} -c "CREATE EXTENSION hstore;"}
@@ -31,7 +31,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     end
     
     desc "Generate the database.yml configuration file."
-    task :setup, roles: :app do
+    task :setup, :roles => :app do
       run "mkdir -p #{shared_path}/config"
       template "postgresql.yml.erb", "#{shared_path}/config/database.yml"
     end
@@ -40,7 +40,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     end
 
     desc "Symlink the database.yml file into latest release"
-    task :symlink, roles: :app do
+    task :symlink, :roles => :app do
       run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     end
     if database.eql?("postgresql")
