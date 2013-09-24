@@ -7,13 +7,13 @@ Capistrano::Configuration.instance(:must_exist).load do
   
   namespace :nginx do
     desc "Install nginx"
-    task :install, roles: :web do
+    task :install, :roles => :web do
       run "#{sudo} apt-get -y install nginx"
     end
     after "deploy:install", "nginx:install"
 
     desc "Setup nginx configuration for this application"
-    task :setup, roles: :web do
+    task :setup, :roles => :web do
       template "nginx_#{nginx_app_server}.erb", "/tmp/nginx_conf"
       run "#{sudo} mv /tmp/nginx_conf /etc/nginx/sites-enabled/#{application}"
       run "#{sudo} rm -f /etc/nginx/sites-enabled/default"
@@ -23,7 +23,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   
     %w[start stop restart].each do |command|
       desc "#{command} nginx"
-      task command, roles: :web do
+      task command, :roles => :web do
         run "#{sudo} service nginx #{command}"
       end
     end

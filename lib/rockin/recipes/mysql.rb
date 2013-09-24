@@ -14,7 +14,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   namespace :mysql do
   
     desc "Install the latest stable release of MySql."
-    task :install, roles: :db, only: {primary: true} do
+    task :install, :roles => :db, only: {primary: true} do
       #run "echo #{mysql_password}"
       run "#{sudo} apt-get -y update"
       run "#{sudo} apt-get -y install mysql-server" do |channel, stream, data|
@@ -26,7 +26,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     after "deploy:install", "mysql:install"
 
     desc "Create a database and user for this application."
-    task :create_database, roles: :db, only: {primary: true} do
+    task :create_database, :roles => :db, only: {primary: true} do
       put "create database #{mysql_database};
       grant all on #{mysql_database}.* to '#{mysql_user}'@'#{mysql_host}' identified by '#{mysql_password}';", "/tmp/mysql_create"
       run "mysql -u root -p'#{mysql_root_password}' < /tmp/mysql_create"
@@ -35,14 +35,14 @@ Capistrano::Configuration.instance(:must_exist).load do
     after "deploy:setup", "mysql:create_database"
 
     desc "Generate the database.yml configuration file."
-    task :setup, roles: :app do
+    task :setup, :roles => :app do
       run "mkdir -p #{shared_path}/config"
       template "mysql.yml.erb", "#{shared_path}/config/database.yml"
     end
     after "deploy:setup", "mysql:setup" 
 
     desc "Symlink the database.yml file into latest release"
-    task :symlink, roles: :app do
+    task :symlink, :roles => :app do
       run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     end
     after "deploy:finalize_update", "mysql:symlink" 
