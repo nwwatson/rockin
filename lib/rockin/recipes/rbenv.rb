@@ -21,12 +21,10 @@ Capistrano::Configuration.instance(:must_exist).load do
     run "cat /tmp/rbenvrc ~/.bashrc > ~/.bashrc.tmp"
     run "mv ~/.bashrc.tmp ~/.bashrc"
     run %q{export PATH="$HOME/.rbenv/bin:$PATH"}
-    run %q{eval "$(rbenv init -)"}
+    #run %q{eval "$(rbenv init -)"}
     run "#{sudo} apt-get update" # from https://github.com/fesplugas/rbenv-installer/blob/master/bin/rbenv-bootstrap-ubuntu-12-04
     run "#{sudo} apt-get -y install build-essential zlib1g-dev libssl-dev libreadline-gplv2-dev"
-    
     run "CONFIGURE_OPTS=--no-tcmalloc rbenv install #{ruby_version}"
-    
     run "rbenv global #{ruby_version}"
     run "gem install bundler --no-ri --no-rdoc"
     run "rbenv rehash"
