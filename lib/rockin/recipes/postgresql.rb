@@ -13,6 +13,7 @@ Capistrano::Configuration.instance(:must_exist).load do
         run "#{sudo} apt-get -y install postgresql libpq-dev"
         run "#{sudo} apt-get -y install postgresql-contrib"
       else 
+        # File needed to connect to postgres and install pg client gem
         run "#{sudo} apt-get -y install postgresql-client libpq-dev"
       end
     end
