@@ -5,7 +5,7 @@ stdout_path "<%= unicorn_log %>"
 
 listen "/tmp/unicorn.<%= application %>.sock"
 worker_processes <%= unicorn_workers %>
-timeout 30
+timeout 120
 
 before_exec do |server|
   ENV["BUNDLE_GEMFILE"] = "<%= unicorn_gemfile %>"
