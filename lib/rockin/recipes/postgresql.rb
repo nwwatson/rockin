@@ -13,7 +13,8 @@ Capistrano::Configuration.instance(:must_exist).load do
         run "#{sudo} apt-get -y install postgresql libpq-dev"
         run "#{sudo} apt-get -y install postgresql-contrib"
       else 
-        run "#{sudo} apt-get -y install postgresql-client"
+        # File needed to connect to postgres and install pg client gem
+        run "#{sudo} apt-get -y install postgresql-client libpq-dev"
       end
     end
     if database.eql?("postgresql")
@@ -22,9 +23,9 @@ Capistrano::Configuration.instance(:must_exist).load do
     
     desc "Create a database for this application."
     task :create_database, :roles => :db, :only => { :primary => true } do
-      run %Q{#{sudo} -u postgres psql -c "create user #{postgresql_user} with password '#{postgresql_password}';"}
-      run %Q{#{sudo} -u postgres psql -c "create database #{postgresql_database} owner #{postgresql_user};"}
-      run %Q{#{sudo} -u postgres psql -d #{postgresql_database} -c "CREATE EXTENSION hstore;"}
+      run %Q{#{sudo} -u postgres psql -h #{postgresql_host} -c "create user #{postgresql_user} with password '#{postgresql_password}';"}
+      run %Q{#{sudo} -u postgres psql -h #{postgresql_host} -c "create database #{postgresql_database} owner #{postgresql_user};"}
+      run %Q{#{sudo} -u postgres psql -h #{postgresql_host} -d #{postgresql_database} -c "CREATE EXTENSION hstore;"}
     end
     if database.eql?("postgresql") && postgres_create_database.eql?(true)
       after "deploy:setup", "postgresql:create_database" 
