@@ -1,6 +1,6 @@
 Capistrano::Configuration.instance(:must_exist).load do
-  set_default(:postgres_install, true)
-  set_default(:postgres_create_database, true)
+  set_default(:postgres_install, false)
+  set_default(:postgres_create_database, false)
   set_default(:postgresql_host) { Capistrano::CLI.password_prompt "PostgreSQL Host: " }
   set_default(:postgresql_user) { Capistrano::CLI.password_prompt "PostgreSQL User: " }
   set_default(:postgresql_password) { Capistrano::CLI.password_prompt "PostgreSQL Password: " }
