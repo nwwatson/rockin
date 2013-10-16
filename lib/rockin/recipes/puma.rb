@@ -18,7 +18,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       # Create Puma application manifest
       run "#{sudo} touch /etc/puma.conf"
       run "echo ""#{deploy_to}/current"" > /tmp/puma.txt"
-      run "#{sudo} cat /tmp/puma.txt >> /etc/puma.conf"
+      run "#{sudo} -s cat /tmp/puma.txt >> /etc/puma.conf"
       # Create Puma Configuration File
       run "mkdir #{shared_path}/config/puma"
       template "puma-production.erb", "#{shared_path}/config/puma/production.rb"
