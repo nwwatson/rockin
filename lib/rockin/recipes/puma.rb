@@ -21,7 +21,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       run "#{sudo} cat /etc/puma.conf >> /tmp/puma.txt"
       run "#{sudo} mv /tmp/puma.txt /etc/puma.conf"
       # Create Puma Configuration File
-      run "mkdir #{shared_path}/config/puma"
+      run "mkdir -p #{shared_path}/config/puma"
       template "puma-production.erb", "#{shared_path}/config/puma/production.rb"
     end
     after "deploy:setup", "rockin_puma:setup"
