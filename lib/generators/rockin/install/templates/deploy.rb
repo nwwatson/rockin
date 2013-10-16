@@ -14,6 +14,8 @@ set :copy_exclude, %w[.git log tmp .DS_Store]
 <% end -%>
 set :use_sudo, false
 set :port, 22
+set :rack_env, "production"
+set :rails_env, "production"
 set :default_environment, {
   'PATH' => "/home/#{user}/.rbenv/shims:/home/#{user}/.rbenv/bin:$PATH"
 }
@@ -69,5 +71,8 @@ require 'rockin/recipes/nodejs'
 require 'rockin/recipes/<%= app_server %>'
 require 'rockin/recipes/utilities'
 require 'rockin/recipes/security'
+<% if app_server.eql?("puma") %>
+require 'puma/capistrano'
+<% end %>
 
 after "deploy", "deploy:cleanup" # keep only the last 5 releases
