@@ -30,6 +30,6 @@ Capistrano::Configuration.instance(:must_exist).load do
     task :symlink, :roles => :app do
       run "ln -nfs #{shared_path}/config/puma/production.rb #{release_path}/config/puma/production.rb"
     end
-    after "deploy:finalize_update", "rockin_puma:symlink" 
+    #after "deploy:finalize_update", "rockin_puma:symlink" 
   end
 end
