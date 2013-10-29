@@ -1,5 +1,5 @@
 upstream puma_<%= application %> {
-  server unix:///<%= shared_path %>/tmp/puma/puma.sock fail_timeout=0;
+  server unix:///<%= shared_path %>/sockets/puma.sock fail_timeout=0;
 }
 
 # Redirect example.com to www.example.com

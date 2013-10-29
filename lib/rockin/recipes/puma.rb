@@ -2,7 +2,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   set_default(:puma_environment) { rails_env }
   set_default(:puma_bind) { "unix://#{shared_path}/sockets/puma.sock" }
   set_default(:puma_pid) { "#{shared_path}/pids/puma.pid" }
-  set_default(:puma_state) { " #{shared_path}/sockets/puma.state" }
+  set_default(:puma_state) { "#{shared_path}/sockets/puma.state" }
   set_default(:puma_config) { "#{shared_path}/config/puma.rb" }
   set_default(:puma_user) { user }
 
