@@ -1,6 +1,7 @@
+require 'puma/capistrano'
 Capistrano::Configuration.instance(:must_exist).load do
   set_default(:puma_environment) { rails_env }
-  set_default(:puma_bind) { "unix://#{shared_path}/sockets/puma.sock" }
+  set_default(:puma_socket) { "unix:///tmp/#{application}-puma.sock" }
   set_default(:puma_pid) { "#{shared_path}/pids/puma.pid" }
   set_default(:puma_state) { "#{shared_path}/sockets/puma.state" }
   set_default(:puma_config) { "#{shared_path}/config/puma.rb" }
@@ -26,10 +27,12 @@ Capistrano::Configuration.instance(:must_exist).load do
     end
     after "deploy:setup", "rockin_puma:setup"
 
-    desc "Symlink the production.rb file for puma into latest release"
-    task :symlink, :roles => :app do
+    desc "Create a shared tmp dir for puma state files"
+    task :symlink, roles: :app do
       run "ln -nfs #{shared_path}/config/puma/production.rb #{release_path}/config/puma/production.rb"
+      run "rm -rf #{release_path}/tmp"
+      run "ln -s #{shared_path}/tmp #{release_path}/tmp"
     end
-    #after "deploy:finalize_update", "rockin_puma:symlink" 
+    after "deploy:update", "puma_ext:symlink"
   end
 end

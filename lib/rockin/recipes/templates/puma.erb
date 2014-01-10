@@ -1,9 +1,5 @@
-
-# /etc/init/puma.conf - Puma Config
-
 description "Puma Background Worker"
 
-# no "start on", we don't want to automatically start
 stop on (stopping puma-manager or runlevel [06])
 
 # Set user information
@@ -16,19 +12,18 @@ respawn limit 3 30
 instance ${app}
 
 script
+
 exec /bin/bash <<'EOT'
+
   export HOME="$(eval echo ~$(id -un))"
 
-  cd $app
+  cd ${app}
 
   export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
 
-  logger -t puma "Starting server $app"
+  logger -t puma "Starting Server: ${app}"
 
   exec bundle exec puma -C config/puma/production.rb
+
 EOT
 end script
-
-
-
-
