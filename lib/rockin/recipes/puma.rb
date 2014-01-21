@@ -33,6 +33,6 @@ Capistrano::Configuration.instance(:must_exist).load do
       run "rm -rf #{release_path}/tmp"
       run "ln -s #{shared_path}/tmp #{release_path}/tmp"
     end
-    after "deploy:update", "puma_ext:symlink"
+    after "deploy:update", "rockin_puma:symlink"
   end
 end
