@@ -31,7 +31,6 @@ Capistrano::Configuration.instance(:must_exist).load do
 
     desc "Create a shared tmp dir for puma state files"
     task :symlink, roles: :app do
-      run "ln -nfs #{shared_path}/config/puma/production.rb #{release_path}/config/puma/production.rb"
       run "ln -s #{shared_path}/tmp #{release_path}/tmp"
     end
     after "deploy:update", "rockin_puma:symlink"
