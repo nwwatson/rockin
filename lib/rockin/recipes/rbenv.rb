@@ -24,7 +24,11 @@ Capistrano::Configuration.instance(:must_exist).load do
     run %q{eval "$(rbenv init -)"}
     run "#{sudo} apt-get update" # from https://github.com/fesplugas/rbenv-installer/blob/master/bin/rbenv-bootstrap-ubuntu-12-04
     run "#{sudo} apt-get -y install build-essential zlib1g-dev libssl-dev libreadline-gplv2-dev"
-    run "CONFIGURE_OPTS=--no-tcmalloc rbenv install #{ruby_version}"
+    if ruby_version == "ree-1.8.7-2012.02"
+       run "CONFIGURE_OPTS=--no-tcmalloc rbenv install #{ruby_version}"
+    else
+       run "rbenv install #{ruby_version}"
+    end
     run "rbenv global #{ruby_version}"
     run "gem install bundler --no-ri --no-rdoc"
     run "rbenv rehash"
