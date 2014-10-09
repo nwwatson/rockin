@@ -6,8 +6,8 @@ Capistrano::Configuration.instance(:must_exist).load do
   namespace :mongodb do    
     desc "Installs mongodb binaries and all dependencies"
     task :install, :role => :app do
-      utilities.apt_install "tcsh scons g++ libpcre++-dev"
-      utilities.apt_install "libboost1.37-dev libreadline-dev xulrunner-dev"
+      run "#{sudo} apt-get -y tcsh scons g++ libpcre++-dev"
+      run "#{sudo} apt-get -y libboost1.37-dev libreadline-dev xulrunner-dev"
       mongodb.make_spidermonkey
       mongodb.make_mongodb
       mongodb.setup_db_path
