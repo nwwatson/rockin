@@ -5,9 +5,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   namespace :mongodb do
     desc "Install the latest stable release of mongodb."
     task :install, :roles => :db, :only => { :primary => true } do
-        # File needed to connect to postgres and install pg client gem
-        run "#{sudo} apt-get -y install mongodb"
-      end
+      run "#{sudo} apt-get -y install mongodb"
     end
     if database.eql?("mongodb")
       after "deploy:install", "mongodb:install"
